@@ -1,3 +1,3 @@
 # denverpovertymap
 
-## We will be showing data based on paverty per county
+## We will be showing data based on poverty per county
