@@ -1,5 +1,4 @@
-﻿"Persons in poverty, percent by County",""
-"County","Individuals Below Poverty Level"
+﻿"County","Individuals Below Poverty Level"
 "Adams County","10.6%"
 "Alamosa County","21.3%"
 "Arapahoe County","7.8%"
@@ -64,7 +63,3 @@
 "Washington County","12.9%"
 "Weld County","9.4%"
 "Yuma County","13%"
-"Source(s): U.S. Census Bureau, 2017 Small Area Income and Poverty Estimates (SAIPE) 
- Powered by the U.S. Census Bureau
- Data may contain sampling error. Sampling error and margin of errormay render some of the differences between geographies statistically insignificant.An 'X' entry indicates that either no sample observations or too few sample observations were available to compute an estimate.Note that an 'X' entry in other US Census Bureau tables could indicate a different issue.
-  ",""
