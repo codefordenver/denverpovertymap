@@ -1,26 +1,118 @@
-import plotly.graph_objects as go
-import numpy as np
-import pandas as pd
-counties = {}
-co_poverty = pd.read_csv('data.csv')
-co_poverty = co_poverty.rename(columns={"County": "county_name", "Individuals Below Poverty Level": "below_poverty"})
-us_cities = pd.read_csv('uscities.csv')
-co_cities = us_cities[us_cities['state_id']=="CO"]
-# by_county = co_cities.groupby(co_cities["county_name"])
-by_county_df = pd.DataFrame({'count' : co_cities.groupby( [ "county_name", "lat","lng"] ).size()}).reset_index()
-for index, row in by_county_df.iterrows():
-    if row["county_name"] not in counties:
-        counties[row["county_name"]+" County"] = [row["lat"], row["lng"]]
-
-# final_pd = pd.concat([pd.DataFrame([keys, values[0], values[1]], columns=["county_name", "lat","long"]) for keys, values in counties.items()],ignore_index=True)
-
-# print(final_pd.head())
-almost_df = pd.DataFrame(columns=["county_name", "lat","long"])
-for keys, values in counties.items():
-   almost_df = almost_df.append({'county_name': keys,'lat': values[0], 'long': values[1]}, ignore_index=True)
-
-final = pd.merge(co_poverty, almost_df, how='inner', on='county_name', left_on=None, right_on=None,
-         left_index=False, right_index=False, sort=True,
-         suffixes=('_x', '_y'), copy=True, indicator=False,
-         validate=None)
-print(final)
+from matplotlib import pyplot as plt
+poverty_border_of_two = 15000
+sum_people_Denver = 0
+people_in_poverty_Denver_2018 = 0
+people_in_poverty_Denver_2019 = 0
+try:
+  income_file1 = open("income of Denver County families.csv", "r")
+  for line in income_file1:
+      sum_people_Denver += len(line[0])
+  print ("Amount of families in Denver County is "+ str(sum_people_Denver) + ".")
+finally:
+  income_file1.close()
+try:
+  income_file1 = open("income of Denver County families.csv", "r")
+  for line in income_file1:
+    line = list(line.split(","))
+    if int(line[1]) < poverty_border_of_two:
+       people_in_poverty_Denver_2018 += 1 
+       a = (people_in_poverty_Denver_2018 * 100) / sum_people_Denver 
+    if int(line[2]) < poverty_border_of_two:
+       people_in_poverty_Denver_2019 += 1 
+       a_1 = (people_in_poverty_Denver_2019 * 100) / sum_people_Denver       
+  print ("Amount of families in poverty in 2018 is "+ str(people_in_poverty_Denver_2018) + ". It is " + str(round(a,2)) + "% of whole Denver County families of two.")
+  print ("Amount of families in poverty in 2019 is "+ str(people_in_poverty_Denver_2019) + ". It is " + str(round(a_1,2)) + "% of whole Denver County families of two.")
+finally:
+  income_file1.close()
+sum_people_Arapahoe = 0
+people_in_poverty_Arapahoe_2018 = 0
+people_in_poverty_Arapahoe_2019 = 0
+try:
+  income_file2 = open("income of Arapahoe County families.csv", "r")
+  for line in income_file2:
+      sum_people_Arapahoe += len(line[0])
+  print ("Amount of families in Arapahoe County is "+ str(sum_people_Arapahoe) + ".")
+finally:
+  income_file2.close()
+try:
+  income_file2 = open("income of Arapahoe County families.csv", "r")
+  for line in income_file2:
+    line = list(line.split(","))
+    if int(line[1]) < poverty_border_of_two:
+       people_in_poverty_Arapahoe_2018 += 1
+       b = (people_in_poverty_Arapahoe_2018 * 100) / sum_people_Arapahoe  
+    if int(line[2]) < poverty_border_of_two:
+       people_in_poverty_Arapahoe_2019 += 1
+       b_1 = (people_in_poverty_Arapahoe_2019 * 100) / sum_people_Arapahoe      
+  print ("Amount of families in poverty in 2018 is "+ str(people_in_poverty_Arapahoe_2018) + ". It is " + str(round(b,2)) + "% of whole Arapahoe County families of two.")
+  print ("Amount of families in poverty in 2019 is "+ str(people_in_poverty_Arapahoe_2019) + ". It is " + str(round(b_1,2)) + "% of whole Arapahoe County families of two.")
+finally:
+  income_file2.close()
+sum_people_Adams = 0
+people_in_poverty_Adams_2018 = 0
+people_in_poverty_Adams_2019 = 0
+try:
+  income_file3 = open("income of Adams County families.csv", "r")
+  for line in income_file3:
+      sum_people_Adams += len(line[0])
+  print ("Amount of families in Adams County is "+ str(sum_people_Adams) + ".")
+finally:
+  income_file3.close()
+try:
+  income_file3 = open("income of Adams County families.csv", "r")
+  for line in income_file3:
+    line = list(line.split(","))
+    if int(line[1]) < poverty_border_of_two:
+       people_in_poverty_Adams_2018 += 1  
+       c = (people_in_poverty_Adams_2018 * 100) / sum_people_Adams 
+    if int(line[2]) < poverty_border_of_two:
+       people_in_poverty_Adams_2019 += 1  
+       c_1 = (people_in_poverty_Adams_2019 * 100) / sum_people_Adams 
+  print ("Amount of families in poverty in 2018 is "+ str(people_in_poverty_Adams_2018) + ". It is " + str(round(c, 2)) + "% of whole Adams County families of two.")
+  print ("Amount of families in poverty in 2019 is "+ str(people_in_poverty_Adams_2019) + ". It is " + str(round(c_1, 2)) + "% of whole Adams County families of two.")
+finally:
+  income_file3.close()
+  print ("Totally in Denver City " + str(sum_people_Denver + sum_people_Arapahoe + sum_people_Adams) + " families of two.")
+  print (str(people_in_poverty_Denver_2018 + people_in_poverty_Arapahoe_2018 + people_in_poverty_Adams_2018) + " families was in above of poverty line in 2018.")
+  print ("In 2019 it is " + str(people_in_poverty_Denver_2019 + people_in_poverty_Arapahoe_2019 + people_in_poverty_Adams_2019))
+  print ("It is " + str(round(((people_in_poverty_Denver_2018 + people_in_poverty_Arapahoe_2018 + people_in_poverty_Adams_2018) * 100) / (sum_people_Denver + sum_people_Arapahoe + sum_people_Adams),2)) + "% in 2018. And " +str(round(((people_in_poverty_Denver_2019 + people_in_poverty_Arapahoe_2019 + people_in_poverty_Adams_2019) * 100) / (sum_people_Denver + sum_people_Arapahoe + sum_people_Adams),2)) + "% in 2019.")
+  x = ["2018", "2019"]
+  y = [a, a_1]
+  z = [b, b_1]
+  w = [c, c_1]
+  plt.plot(x,y)
+  plt.plot(x,z)
+  plt.plot(x,w)
+  plt.title("Denver City Poverty Map")
+  plt.xlabel("Year")
+  plt.ylabel("People in poverty in %")
+  plt.legend(["Denver County", "Arapahoe County", "Adams County"])
+  plt.show()
+'''try:
+  income_file1 = open("income of Denver County families.csv", "r")
+  income_file2 = open("income of Arapahoe County families.csv", "r")
+  income_file3 = open("income of Adams County families.csv", "r")
+  print("Denver County in 2018:")
+  for line in income_file1:
+    line = list(line.split(","))
+    if int(line[1]) < poverty_border_of_two: 
+       print(line)
+  print("Denver County in 2018:")
+   for line in income_file1:
+    line = list(line.split(","))
+    if int(line[2]) < poverty_border_of_two: 
+       print(line)
+  print("Arapahoe County:")
+  for line in income_file2:
+    line = list(line.split(","))
+    if int(line[1]) < poverty_border_of_two: 
+       print (line)
+  print("Adams County:")
+  for line in income_file3:
+    line = list(line.split(","))
+    if int(line[1]) < poverty_border_of_two: 
+       print (line)
+finally:
+  income_file1.close()
+  income_file2.close()
+  income_file3.close()'''
